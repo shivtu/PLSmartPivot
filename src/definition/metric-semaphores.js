@@ -41,7 +41,7 @@ const metricSemaphores = {
       component: 'color-picker',
       dualOutput: true,
       defaultValue: {
-        index: 8,
+        index: 10,
         color: '#f93f17'
       }
     },
@@ -52,7 +52,7 @@ const metricSemaphores = {
       component: 'color-picker',
       dualOutput: true,
       defaultValue: {
-        index: 11,
+        index: 1,
         color: '#ffffff'
       }
     },
@@ -69,7 +69,7 @@ const metricSemaphores = {
       component: 'color-picker',
       dualOutput: true,
       defaultValue: {
-        index: 9,
+        index: 8,
         color: '#ffcf02'
       }
     },
@@ -80,7 +80,7 @@ const metricSemaphores = {
       component: 'color-picker',
       dualOutput: true,
       defaultValue: {
-        index: 12,
+        index: 15,
         color: '#000000'
       }
     },
@@ -91,7 +91,7 @@ const metricSemaphores = {
       component: 'color-picker',
       dualOutput: true,
       defaultValue: {
-        index: 10,
+        index: 3,
         color: '#276e27'
       }
     },
@@ -102,7 +102,7 @@ const metricSemaphores = {
       component: 'color-picker',
       dualOutput: true,
       defaultValue: {
-        index: 11,
+        index: 1,
         color: '#ffffff'
       }
     }
