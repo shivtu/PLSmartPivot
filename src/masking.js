@@ -12,6 +12,9 @@ export function ApplyPreMask (mask, value) { // aqui
           return (addSeparators(value, '.', ',', 0));
         case '+#,##0':
           return (addSeparators(value, ',', '.', 0));
+        case '# ##0':
+        case '# ##0':
+          return (addSeparators(value, ' ', '.', 0));
         default:
           return (applyMask(mask.substring(0, mask.indexOf(';')), value));
       }
@@ -29,6 +32,9 @@ export function ApplyPreMask (mask, value) { // aqui
           return (`(${addSeparators(vMyValue, '.', ',', 0)})`);
         case '-#,##0':
           return (`(${addSeparators(vMyValue, ',', '.', 0)})`);
+        case '# ##0':
+        case '# ##0':
+          return (`(${addSeparators(vMyValue, ' ', '.', 0)})`);
         default:
           return (`(${applyMask(vMyMask, vMyValue)})`);
       }

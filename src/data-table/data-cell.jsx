@@ -129,14 +129,14 @@ DataCell.propTypes = {
 export default DataCell;
 
 function formatMeasurementValue (measurement, styling) {
+  if (isNaN(measurement.value)) {
+    return styling.symbolForNulls;
+  }
+
   const isColumnPercentageBased = (/%/).test(measurement.format);
   let formattedMeasurementValue = '';
   if (isColumnPercentageBased) {
-    if (isNaN(measurement.value)) {
-      formattedMeasurementValue = styling.symbolForNulls;
-    } else {
-      formattedMeasurementValue = ApplyPreMask('0,00%', measurement.value);
-    }
+    formattedMeasurementValue = ApplyPreMask(measurement.format, measurement.value * 100);
   } else {
     let magnitudeDivider;
     switch (measurement.magnitude.toLowerCase()) {
@@ -148,29 +148,29 @@ function formatMeasurementValue (measurement, styling) {
         break;
       default:
         magnitudeDivider = 1;
+        break;
     }
-    const formattingStringWithoutMagnitude = measurement.format.replace(/k|K|m|M/gi, '');
-    if (isNaN(measurement.value)) {
-      formattedMeasurementValue = styling.symbolForNulls;
-    } else {
-      let preFormatValue = measurement.value;
-      if (isColumnPercentageBased) {
-        preFormatValue *= 100;
-      }
-      switch (formattingStringWithoutMagnitude) {
-        case '#.##0':
-          formattedMeasurementValue = addSeparators((preFormatValue / magnitudeDivider), '.', ',', 0);
-          break;
-        case '#,##0':
-          formattedMeasurementValue = addSeparators((preFormatValue / magnitudeDivider), ',', '.', 0);
-          break;
-        default:
-          formattedMeasurementValue = ApplyPreMask(
-            formattingStringWithoutMagnitude,
-            (preFormatValue / magnitudeDivider)
-          );
-          break;
-      }
+    const formattingStringWithoutMagnitude = measurement.format.replace(/k|K|m|M|/gi, '');
+    switch (formattingStringWithoutMagnitude) {
+      case '#.##0':
+        formattedMeasurementValue
+          = addSeparators((measurement.value / magnitudeDivider), '.', ',', 0);
+        break;
+      case '#,##0':
+        formattedMeasurementValue
+          = addSeparators((measurement.value / magnitudeDivider), ',', '.', 0);
+        break;
+      case '# ##0':
+      case '# ##0':
+        formattedMeasurementValue
+          = addSeparators((measurement.value / magnitudeDivider), ' ', '.', 0);
+        break;
+      default:
+        formattedMeasurementValue = ApplyPreMask(
+          formattingStringWithoutMagnitude,
+          (measurement.value / magnitudeDivider)
+        );
+        break;
     }
   }
   return formattedMeasurementValue;
