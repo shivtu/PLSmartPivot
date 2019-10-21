@@ -194,7 +194,7 @@ function appendMissingCells (
       } else {
         destRow.push(sourceRow[index]);
         index++;
-      }
+      }/*Bug fix QLIK-97295 */
     }
   });
   return index;
