@@ -67,7 +67,6 @@ function generateMatrixCell ({ cell, dimension1Information, dimension2Informatio
       elementNumber: dimension2Information.qElemNumber
     };
   }
-
   return matrixCell;
 }
 
@@ -105,7 +104,6 @@ function generateDataSet (
           dimension2Information,
           measurementInformation
         });
-
         return generatedCell;
       });
 
@@ -178,17 +176,25 @@ function appendMissingCells (
       index++;
     } else {
       // Source doesn't contain the expected cell, so add empty
-      destRow.push({
-        displayValue: '',
-        parents: {
-          dimension1: { elementNumber: dim1ElementNumber },
-          dimension2: { elementNumber: dim2ElementNumber },
-          measurement: {
-            header: measurement.name,
-            index: measureIndex
+
+      /*Bug fix QLIK-97295 */
+      if (typeof sourceRow[index] === 'undefined') { //sourceRow[index] gets undefined values when index is out of range in sourceRow Array
+        destRow.push({
+          displayValue: '',
+          parents: {
+            dimension1: { elementNumber: dim1ElementNumber },
+            dimension2: { elementNumber: dim2ElementNumber },
+            measurement: {
+              header: measurement.name,
+              index: measureIndex
+            }
           }
-        }
-      });
+        });
+        index++;
+      } else {
+        destRow.push(sourceRow[index]);
+        index++;
+      }
     }
   });
   return index;
@@ -206,6 +212,7 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
     measurements,
     matrix
   } = generateDataSet(component, dimensionsInformation, measurementsInformation, dataCube);
+  //console.log('generateDataSet - ', generateDataSet(component, dimensionsInformation, measurementsInformation, dataCube));
 
   const customSchemaBasic = [];
   const customSchemaFull = [];
