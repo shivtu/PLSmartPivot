@@ -212,7 +212,6 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
     measurements,
     matrix
   } = generateDataSet(component, dimensionsInformation, measurementsInformation, dataCube);
-  //console.log('generateDataSet - ', generateDataSet(component, dimensionsInformation, measurementsInformation, dataCube));
 
   const customSchemaBasic = [];
   const customSchemaFull = [];
