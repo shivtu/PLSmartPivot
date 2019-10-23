@@ -167,34 +167,23 @@ function appendMissingCells (
 
   let index = sourceIndex;
   measurements.forEach((measurement, measureIndex) => {
-    if (index < sourceRow.length
-      && (dim2ElementNumber === -1
-        || sourceRow[index].parents.dimension2.elementNumber === dim2ElementNumber)
-      && sourceRow[index].parents.measurement.header === measurement.name) {
+    if (index < sourceRow.length) {
       // Source contains the expected cell
       destRow.push(sourceRow[index]);
       index++;
     } else {
       // Source doesn't contain the expected cell, so add empty
-
-      /*Bug fix QLIK-97295 */
-      if (typeof sourceRow[index] === 'undefined') { //sourceRow[index] gets undefined values when index is out of range in sourceRow Array
-        destRow.push({
-          displayValue: '',
-          parents: {
-            dimension1: { elementNumber: dim1ElementNumber },
-            dimension2: { elementNumber: dim2ElementNumber },
-            measurement: {
-              header: measurement.name,
-              index: measureIndex
-            }
+      destRow.push({
+        displayValue: '',
+        parents: {
+          dimension1: { elementNumber: dim1ElementNumber },
+          dimension2: { elementNumber: dim2ElementNumber },
+          measurement: {
+            header: measurement.name,
+            index: measureIndex
           }
-        });
-        index++;
-      } else {
-        destRow.push(sourceRow[index]);
-        index++;
-      }/*Bug fix QLIK-97295 */
+        }
+      });
     }
   });
   return index;
